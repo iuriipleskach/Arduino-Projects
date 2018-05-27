@@ -6,7 +6,7 @@
 
 const int greenPin = 4;
 const int bluePin = 6;
-int receiverPin = 11;              
+const int receiverPin = 11;              
 
 IRrecv receiver(receiverPin);  
 IRsend irsend;

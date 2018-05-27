@@ -7,7 +7,7 @@
 const char* ssid = "ManUtd";
 const char* password = "Bryant24";
 
-int receivedCode = 0;
+unsigned long receivedCode = 0;
 
 // TODO: next steps:
 // - Implement new endpoint ?receive returning the last int value read from Serial.
@@ -56,7 +56,7 @@ void loop() {
   
   // Match the request
   int parametersBeginIndex = request.indexOf("?send=");
-  int sendValue = 0;
+  unsigned long sendValue = 0;
   if (parametersBeginIndex != -1) {
     String parametersString = request.substring(parametersBeginIndex);
     int parameterValueBeginIndex = parametersString.indexOf("=") + 1;
