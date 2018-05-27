@@ -4,8 +4,10 @@
 
 #include <ESP8266WiFi.h>
 
-const char* ssid = "NetworkName";
-const char* password = "Password";
+const char* ssid = "ManUtd";
+const char* password = "Bryant24";
+
+int receivedCode = 0;
 
 // Create an instance of the server
 // specify the port to listen on as an argument
@@ -55,6 +57,10 @@ void loop() {
     sendValue = parametersString.substring(parameterValueBeginIndex).toInt();
   }
 
+  if (Serial.available() > 0) {
+    receivedCode = Serial.parseInt();
+  }
+
   Serial.print(sendValue);
   
   client.flush();
@@ -62,8 +68,12 @@ void loop() {
   // Prepare the response
   String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n ";
   s += request;
-  s += "\r\n parsed parameter = ";
+  s += "\r\n sender parameter = ";
   s += (sendValue);
+  if (receivedCode != 0) {
+    s += "\r\n receiver parameter = ";
+    s += (receivedCode);
+  }
   s += "</html>\n";
 
   // Send the response to the client
