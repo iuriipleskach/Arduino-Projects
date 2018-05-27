@@ -9,6 +9,12 @@ const char* password = "Bryant24";
 
 int receivedCode = 0;
 
+// TODO: next steps:
+// - Implement new endpoint ?receive returning the last int value read from Serial.
+// - Try to connect LCD to show local IP, so it will be easier to join on networks we don't have admin access to specify static IP address.
+// - Implement array of all (or limited number but more than 1) values received from Serial?
+// - Implement handling different IR types, implement serialization for IR decode_results on the client side?
+
 // Create an instance of the server
 // specify the port to listen on as an argument
 WiFiServer server(80);
@@ -57,13 +63,13 @@ void loop() {
     sendValue = parametersString.substring(parameterValueBeginIndex).toInt();
   }
 
-  if (Serial.available() > 0) {
-    receivedCode = Serial.parseInt();
-  }
-
   Serial.print(sendValue);
   
   client.flush();
+
+  if (Serial.available() > 0) {
+    receivedCode = Serial.parseInt();
+  }
 
   // Prepare the response
   String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n ";
